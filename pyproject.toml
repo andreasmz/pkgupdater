@@ -1,0 +1,21 @@
+[project]
+name = "pkgupdater"
+authors = [
+  { name="Andreas Brilka"},
+]
+dynamic = ["version"]
+
+description = "A simple Python module providing a GUI and API to update packages in pip"
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.11"
+
+keywords = ["updates", "pip", "auto-updates"]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Version Control"
+]
