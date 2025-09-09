@@ -1,9 +1,11 @@
 """ This module contains code to check the version of a package """
 
-import requests
+import urllib.request, urllib.error
 import re
+import json
 
-pypi_API_url = "https://pypi.org/pypi/%NAME%/json"
+
+
 
 def check_package_name(name: str) -> bool:
     """
@@ -23,6 +25,7 @@ def sanatize_package_name(name: str) -> str:
     sanitized = sanitized.replace('_', '-')
     return sanitized.lower()
 
+pypi_API_url = "https://pypi.org/pypi/%NAME%/json"
 
 def get_pip_version(name: str) -> str:
     """ 
@@ -40,11 +43,10 @@ def get_pip_version(name: str) -> str:
     url = pypi_API_url.replace("%NAME%", name)
 
     try:
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        return data["info"]["version"]
-    except requests.RequestException as ex:
+        with urllib.request.urlopen(url, timeout=5) as reponse:
+            data = json.load(reponse)
+        return str(data["info"]["version"])
+    except urllib.error as ex:
         raise ModuleNotFoundError()
     except (ValueError, KeyError) as ex:
         raise ModuleNotFoundError()
